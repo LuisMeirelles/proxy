@@ -1,0 +1,26 @@
+services:
+  traefik:
+    image: traefik:v2.9
+    container_name: traefik
+    ports:
+      - "8080:8080"
+      - "9100:9100"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "letsencrypt:/letsencrypt"
+      - "certs:/certs"
+      - "./traefik.yml:/etc/traefik/traefik.yml"
+    env_file:
+      - .env
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    external: true
+
+volumes:
+  letsencrypt:
+  certs:
