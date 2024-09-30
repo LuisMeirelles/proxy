@@ -25,7 +25,7 @@ certificatesResolvers:
     acme:
       email: ${LETSENCRYPT_EMAIL}
       storage: /letsencrypt/acme.json
-      tlsChallenge: {}
+      tlsChallenge: true
 
 # Certificados autoassinados dinâmicos para desenvolvimento
 tls:
