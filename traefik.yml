@@ -15,7 +15,6 @@ api:
 # Providers para usar Docker como source
 providers:
   docker:
-    endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
     network: "proxy-network"
 
