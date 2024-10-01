@@ -1,12 +1,3 @@
-entryPoints:
-  web:
-    address: ":80"
-  websecure:
-    address: ":443"
-    http:
-      tls:
-        certResolver: default  # Usado para Let's Encrypt em produção
-
 # Habilitar a dashboard do Traefik
 api:
   dashboard: true
@@ -18,23 +9,22 @@ providers:
     exposedByDefault: false
     network: "proxy-network"
 
+entryPoints:
+  websecure:
+    address: ":443"
+
 # Resolvers para Let's Encrypt em produção
 certificatesResolvers:
-  letsencrypt:
+  production:
     acme:
-      email: ${LETSENCRYPT_EMAIL}
-      storage: /letsencrypt/acme.json
       tlsChallenge: true
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      storage: /letsencrypt/acme.json
 
   local:
     acme:
-      email: "${LETSENCRYPT_EMAIL}"  # Email só para consistência
       storage: "/letsencrypt/acme.json"  # O arquivo onde os certificados locais serão armazenados
       tlsChallenge: true  # Desafio TLS para ambiente local (gera o autoassinado automaticamente)
 
-tls:
-  stores:
-    default:
-      defaultCertificate:
-        certFile: "/etc/ssl/certs/local.crt"  # Certificado padrão (opcional, pode ser gerado automaticamente)
-        keyFile: "/etc/ssl/private/local.key"
+log:
+  level: DEBUG
