@@ -12,12 +12,13 @@ providers:
 entryPoints:
   websecure:
     address: ":443"
+  web:
+    address: ":80"
 
 # Resolvers para Let's Encrypt em produção
 certificatesResolvers:
   production:
     acme:
-      tlsChallenge: true
       caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       storage: /letsencrypt/acme.json
       httpChallenge:
