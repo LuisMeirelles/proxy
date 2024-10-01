@@ -20,6 +20,8 @@ certificatesResolvers:
       tlsChallenge: true
       caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       storage: /letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: "web"
 
   local:
     acme:
