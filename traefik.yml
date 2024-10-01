@@ -20,14 +20,21 @@ providers:
 
 # Resolvers para Let's Encrypt em produção
 certificatesResolvers:
-  default:
+  letsencrypt:
     acme:
       email: ${LETSENCRYPT_EMAIL}
       storage: /letsencrypt/acme.json
       tlsChallenge: true
 
-# Certificados autoassinados dinâmicos para desenvolvimento
+  local:
+    acme:
+      email: "${EMAIL}"  # Email só para consistência
+      storage: "acme.json"  # O arquivo onde os certificados locais serão armazenados
+      tlsChallenge: true  # Desafio TLS para ambiente local (gera o autoassinado automaticamente)
+
 tls:
-  options:
+  stores:
     default:
-      selfSigned: true  # Gera certificados autoassinados em desenvolvimento
+      defaultCertificate:
+        certFile: "/etc/ssl/certs/local.crt"  # Certificado padrão (opcional, pode ser gerado automaticamente)
+        keyFile: "/etc/ssl/private/local.key"
