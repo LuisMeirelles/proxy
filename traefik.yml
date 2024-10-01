@@ -28,8 +28,8 @@ certificatesResolvers:
 
   local:
     acme:
-      email: "${EMAIL}"  # Email só para consistência
-      storage: "acme.json"  # O arquivo onde os certificados locais serão armazenados
+      email: "${LETSENCRYPT_EMAIL}"  # Email só para consistência
+      storage: "/letsencrypt/acme.json"  # O arquivo onde os certificados locais serão armazenados
       tlsChallenge: true  # Desafio TLS para ambiente local (gera o autoassinado automaticamente)
 
 tls:
