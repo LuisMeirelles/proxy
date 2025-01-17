@@ -1,33 +1,21 @@
-# Habilitar a dashboard do Traefik
 api:
   dashboard: true
-  insecure: true  # Permitir acesso à dashboard sem autenticação (não recomendado para produção)
+  insecure: true
 
-# Providers para usar Docker como source
 providers:
   docker:
     exposedByDefault: false
     network: "proxy-network"
 
 entryPoints:
-  websecure:
-    address: ":443"
   web:
     address: ":80"
+  websecure:
+    address: ":443"
 
-# Resolvers para Let's Encrypt em produção
-certificatesResolvers:
-  production:
-    acme:
-      caServer: https://acme-v02.api.letsencrypt.org/directory
-      storage: /letsencrypt/acme.json
-      httpChallenge:
-        entryPoint: "web"
-
-  local:
-    acme:
-      storage: "/letsencrypt/acme.json"  # O arquivo onde os certificados locais serão armazenados
-      tlsChallenge: true  # Desafio TLS para ambiente local (gera o autoassinado automaticamente)
-
-log:
-  level: DEBUG
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: "/certs/self-signed.crt"
+        keyFile: "/certs/self-signed.key"

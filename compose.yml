@@ -3,17 +3,18 @@ services:
     image: traefik:v2.9
     container_name: traefik
     command:
-      - "--entryPoints.websecure.http.tls.certResolver=${ENVIRONMENT}"
-      - "--certificatesResolvers.production.acme.email=${LETSENCRYPT_EMAIL}"
-      - "--certificatesResolvers.local.acme.email=${LETSENCRYPT_EMAIL}"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker=true"
+      - "--api.dashboard=true"
+      - "--log.level=DEBUG"
     ports:
       - "8080:8080"
       - "80:80"
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "letsencrypt:/letsencrypt"
-      - "certs:/certs"
+      - "./certs:/certs"
       - "./traefik.yml:/etc/traefik/traefik.yml"
     env_file:
       - .env
@@ -23,7 +24,3 @@ services:
 networks:
   proxy-network:
     external: true
-
-volumes:
-  letsencrypt:
-  certs:
