@@ -2,8 +2,15 @@ services:
   traefik:
     image: traefik:v2.9
     restart: always
+    labels:
+      traefik.enable: true
+      traefik.http.routers.traefik-dashboard.entrypoints: websecure
+      traefik.http.routers.traefik-dashboard.rule: "Host(`traefik.meirelles.dev`)"
+      traefik.http.routers.traefik-dashboard.tls: true
+      traefik.http.routers.traefik-dashboard.tls.certresolver: letsencrypt
+      traefik.http.routers.traefik-dashboard.middlewares: "SslHeader@file"
+      traefik.http.services.traefik-dashboard.loadbalancer.server.port: 8080
     ports:
-      - "8080:8080"
       - "80:80"
       - "443:443"
     volumes:
