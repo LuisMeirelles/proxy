@@ -1,26 +1,19 @@
 services:
   traefik:
     image: traefik:v2.9
-    container_name: traefik
-    command:
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.docker=true"
-      - "--api.dashboard=true"
-      - "--log.level=DEBUG"
+    restart: always
     ports:
       - "8080:8080"
       - "80:80"
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./certs:/certs"
-      - "./traefik.yml:/etc/traefik/traefik.yml"
-    env_file:
-      - .env
+      - "./traefik.yaml:/traefik.yaml:ro"
+      - "./conf/:/etc/traefik/conf"
+      - "./shared/:/shared"
     networks:
-      - proxy-network
+      - proxy
 
 networks:
-  proxy-network:
+  proxy:
     external: true
