@@ -11,8 +11,8 @@ http:
         ForceSTSHeader: true
         STSIncludeSubdomains: true
         STSPreload: true
-        ContentSecurityPolicy: default-src 'self' 'unsafe-inline'
-        CustomFrameOptionsValue: SAMEORIGIN
-        ReferrerPolicy: same-origin
-        PermissionsPolicy: vibrate 'self'
         STSSeconds: 315360000
+        ReferrerPolicy: same-origin
+        CustomFrameOptionsValue: SAMEORIGIN
+        PermissionsPolicy: vibrate 'self'
+        ContentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*; style-src 'self' 'unsafe-inline' https://*; img-src 'self' data: blob: https://*; font-src 'self' https://*; connect-src 'self' https://*;"

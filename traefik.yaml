@@ -11,6 +11,7 @@ providers:
     watch: true
     exposedByDefault: true
     swarmMode: false
+    network: proxy
   file:
     directory: /etc/traefik/conf/
     watch: true
@@ -40,4 +41,3 @@ certificatesResolvers:
       keyType: EC256
       httpChallenge:
         entryPoint: web
-
